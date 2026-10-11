@@ -1,0 +1,7 @@
+# created by install.sh / at runtime
+.venv/
+.vulkan/
+__pycache__/
+models/*.onnx
+models/*.onnx.json
+models/vosk-model-*/

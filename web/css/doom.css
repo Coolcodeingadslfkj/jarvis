@@ -1,0 +1,149 @@
+/* D.O.O.M. theme (Digital Overlord Operations Mainframe): a 90s green-screen terminal for
+   Doctor Doom. Unlike the other themes it changes the layout: the side menu is replaced by a
+   command line and a DOS-style F-key bar (#doom-bar, driven by app.js). Colours come from the
+   palette in js/skins.js through the shared tokens. */
+@font-face { font-family: "VT323"; src: url("../fonts/doom/VT323.ttf"); }
+
+#doom-bar { display: none; }
+
+:root[data-skin="doom"] {
+  --font-display: "VT323", monospace;
+  --font-ui: "VT323", monospace;
+  --font-mono: "VT323", monospace;
+  --top-h: 64px;
+}
+/* VT323 has a tiny x-height: scale every size in the app (inline styles included) to match */
+:root[data-skin="doom"] body { font-size-adjust: 0.52; font-weight: 400; text-shadow: var(--glow); }
+:root[data-skin="doom"] :is(pre, .preview, .xterm) { font-size-adjust: none; text-shadow: none; }
+:root[data-skin="doom"] ::selection { background: var(--c); color: var(--bg); }
+
+/* ---------- CRT: scanlines plus a rounded, darkened bezel (static layers only) ---------- */
+:root[data-skin="doom"] .scanlines { opacity: 1; border-radius: 22px;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(var(--shade-rgb), calc(var(--scan-alpha) * .6)) 2px 3px);
+  box-shadow: 0 0 0 60px rgb(var(--shade-rgb)), inset 0 0 110px rgba(var(--shade-rgb), calc(var(--vignette-alpha) * .8)); }
+:root[data-skin="doom"] .vignette { background: radial-gradient(ellipse at 50% 45%, rgba(var(--c-rgb), .05), transparent 70%); }
+
+/* ---------- layout: no side menu; command line + F-keys at the bottom ---------- */
+:root[data-skin="doom"] #app { grid-template-columns: 1fr; grid-template-rows: var(--top-h) 1fr auto var(--bot-h);
+  grid-template-areas: "top" "main" "cmd" "bot"; }
+:root[data-skin="doom"] #nav { display: none; }
+:root[data-skin="doom"] .view { padding: 14px 22px; }
+:root[data-skin="doom"] #doom-bar { display: block; grid-area: cmd; border-top: 1px solid var(--c); background: rgba(var(--d0-rgb), .92);
+  padding: 4px 22px 0; }
+.doom-out { min-height: 20px; max-height: 96px; overflow: hidden; color: var(--c-bright); font-size: 18px; line-height: 1.2; white-space: pre-wrap; }
+.doom-out .err { color: var(--crit); }
+#doom-form { display: flex; align-items: center; gap: 8px; font-size: 22px; margin: 2px 0 4px; }
+#doom-form label { color: var(--c-bright); white-space: nowrap; }
+#doom-in { flex: 1; background: none; border: 0; outline: none; font-family: var(--font-mono); font-size: 22px; color: var(--hi);
+  caret-color: var(--c-bright); text-shadow: inherit; padding: 0; }
+#doom-in::placeholder { color: var(--muted); }
+#fkeys { display: flex; gap: 2px; border-top: 1px dashed rgba(var(--c-rgb), .4); padding: 3px 0; }
+#fkeys button { flex: 1; display: flex; align-items: center; gap: 6px; background: none; border: 0; cursor: pointer; padding: 1px 4px;
+  font-family: var(--font-mono); font-size: 18px; color: var(--c); text-shadow: inherit; white-space: nowrap; }
+#fkeys button b { background: var(--c); color: var(--bg); padding: 0 5px; font-weight: 400; text-shadow: none; }
+#fkeys button:hover { color: var(--hi); background: rgba(var(--c-rgb), .12); }
+#fkeys button.active { color: var(--bg); background: var(--c-bright); text-shadow: none; }
+#fkeys button.active b { background: var(--bg); color: var(--c-bright); }
+
+/* ---------- top & bottom ---------- */
+:root[data-skin="doom"] #top { background: rgba(var(--d0-rgb), .92); border-bottom: 1px solid var(--c); gap: 18px; }
+:root[data-skin="doom"] #top::after { display: none; }
+:root[data-skin="doom"] .logo { min-width: 0; }
+:root[data-skin="doom"] .logo canvas { width: 48px; height: 48px; image-rendering: pixelated; }
+:root[data-skin="doom"] .logo h1 { font-size: 34px; font-weight: 400; letter-spacing: 6px; line-height: 1; }
+:root[data-skin="doom"] .logo small { font-size: 14px; letter-spacing: 1px; color: var(--c); white-space: nowrap; }
+:root[data-skin="doom"] .clock .t { font-size: 32px; font-weight: 400; line-height: 1; }
+:root[data-skin="doom"] .clock .d { font-size: 14px; white-space: nowrap; letter-spacing: 2px; }
+:root[data-skin="doom"] .top-center { gap: 26px; }
+:root[data-skin="doom"] .chip { font-size: 18px; }
+:root[data-skin="doom"] .chip b { color: var(--hi); }
+:root[data-skin="doom"] #bot { background: rgba(var(--d0-rgb), .92); border-top-color: rgba(var(--c-rgb), .5); font-size: 16px; }
+:root[data-skin="doom"] #bot .status { color: var(--c-bright); }
+:root[data-skin="doom"] #bot .status::before { content: "\25A0"; width: auto; height: auto; border-radius: 0; background: none; box-shadow: none; }
+
+/* ---------- windows: double rule frame, inverse-video title bar ---------- */
+:root[data-skin="doom"] .panel { border: 1px solid rgba(var(--c-rgb), .75);
+  box-shadow: inset 0 0 0 3px rgba(var(--d0-rgb), .9), inset 0 0 0 4px rgba(var(--c-rgb), .4);
+  background: rgba(var(--d1-rgb), .9); }
+:root[data-skin="doom"] .panel-h { margin: -14px -16px 10px; padding: 1px 10px; background: var(--c); border: 0; align-items: center; text-shadow: none; }
+:root[data-skin="doom"] .panel-h h3 { color: var(--bg); text-shadow: none; font-size: 20px; font-weight: 400; letter-spacing: 2px; }
+:root[data-skin="doom"] .panel-h h3::before { content: "\25A0  "; color: var(--bg); font-size: inherit; }
+:root[data-skin="doom"] .panel-h :is(.sub, .state-badge) { color: var(--bg); border-color: var(--bg); box-shadow: none; }
+:root[data-skin="doom"] .panel-h .hud-btn { color: var(--bg); border-color: var(--bg); padding: 0 6px; }
+:root[data-skin="doom"] .big { text-shadow: var(--glow); font-weight: 400; }
+:root[data-skin="doom"] .kv dt { letter-spacing: 0; }
+
+/* meters as block characters */
+:root[data-skin="doom"] .bar { clip-path: none; height: 12px; background: rgba(var(--c-rgb), .08); }
+:root[data-skin="doom"] .bar > i { box-shadow: none; background: repeating-linear-gradient(90deg, var(--c) 0 7px, transparent 7px 9px); }
+:root[data-skin="doom"] .bar.warn > i { background: repeating-linear-gradient(90deg, var(--warn) 0 7px, transparent 7px 9px); }
+:root[data-skin="doom"] .bar.crit > i { background: repeating-linear-gradient(90deg, var(--crit) 0 7px, transparent 7px 9px); }
+:root[data-skin="doom"] .thread i { box-shadow: none; background: repeating-linear-gradient(to top, var(--c) 0 4px, transparent 4px 6px); }
+:root[data-skin="doom"] .gauge-wrap canvas.gauge { image-rendering: pixelated; }
+:root[data-skin="doom"] :is(#home-reactor, #voice-orb, #boot-canvas, .proto .ph canvas) { image-rendering: pixelated; }
+
+/* controls: bracketed text buttons, inverse video on hover */
+:root[data-skin="doom"] :is(.hud-btn, .icon-btn, .chips button, .qt, .suggest button, .media-btns button, .ctl-icon, .step .ops button, .toggle, .toggle::after) {
+  clip-path: none; border-radius: 0; }
+:root[data-skin="doom"] .hud-btn { font-size: 18px; letter-spacing: 1px; padding: 2px 8px; background: transparent; border: 1px solid rgba(var(--c-rgb), .6);
+  color: var(--c-bright); gap: 4px; }
+:root[data-skin="doom"] .hud-btn::before { content: "["; }
+:root[data-skin="doom"] .hud-btn::after { content: "]"; }
+:root[data-skin="doom"] .hud-btn:hover:not(:disabled) { background: var(--c); color: var(--bg); box-shadow: none; text-shadow: none; }
+:root[data-skin="doom"] .hud-btn.primary { background: rgba(var(--c-rgb), .16); }
+:root[data-skin="doom"] .hud-btn.danger:hover:not(:disabled) { background: var(--crit); color: var(--bg); }
+:root[data-skin="doom"] .icon-btn:hover { background: var(--c); color: var(--bg); }
+:root[data-skin="doom"] .hud-input { font-size: 19px; background: rgba(var(--d0-rgb), .8); border-color: rgba(var(--c-rgb), .6); caret-color: var(--c-bright); }
+:root[data-skin="doom"] .hud-input:focus { box-shadow: none; border-color: var(--c-bright); }
+:root[data-skin="doom"] .skin-select { font-size: 18px; }
+:root[data-skin="doom"] .hud-range::-webkit-slider-runnable-track { box-shadow: none;
+  background: repeating-linear-gradient(90deg, var(--c) 0 6px, transparent 6px 8px) 0 0 / var(--p, 50%) 100% no-repeat, rgba(var(--c-rgb), .12); }
+:root[data-skin="doom"] .hud-range::-webkit-slider-thumb { clip-path: none; width: 10px; background: var(--hi); }
+:root[data-skin="doom"] .toggle::after { background: var(--muted); }
+:root[data-skin="doom"] .toggle.on { background: rgba(var(--c-rgb), .3); }
+:root[data-skin="doom"] .toggle.on::after { background: var(--c-bright); box-shadow: none; }
+:root[data-skin="doom"] .qt.on, :root[data-skin="doom"] .chips button.on { background: var(--c); color: var(--bg); box-shadow: none; text-shadow: none; }
+:root[data-skin="doom"] :is(.fitem.sel, .file-table tr.sel td, .place.active, .app.kb) { background: var(--c); color: var(--bg); box-shadow: none; text-shadow: none; }
+:root[data-skin="doom"] :is(.fitem.sel, .app.kb) :is(.nm, .meta, .ic, .cm) { color: var(--bg); }
+:root[data-skin="doom"] .fitem .ic svg, :root[data-skin="doom"] .info-ic svg { filter: none; }
+:root[data-skin="doom"] .file-table th { background: var(--c); color: var(--bg); text-shadow: none; }
+:root[data-skin="doom"] .cal .d.t { box-shadow: none; }
+:root[data-skin="doom"] #settings { background: rgba(var(--d0-rgb), .98); border-left: 1px solid var(--c); }
+:root[data-skin="doom"] .toast { border: 1px solid var(--c); border-left-width: 6px; box-shadow: none; }
+:root[data-skin="doom"] #ctx { box-shadow: none; border-color: var(--c); }
+:root[data-skin="doom"] #ctx div:hover { background: var(--c); color: var(--bg); }
+
+/* ---------- views ---------- */
+:root[data-skin="doom"] .home-hero { padding: 26px 30px 18px; }
+:root[data-skin="doom"] .hero-greet { font-size: 30px; letter-spacing: 1px; line-height: 1.1; }
+:root[data-skin="doom"] .hero-greet::before { content: "> "; color: var(--c); }
+:root[data-skin="doom"] .hero-time { font-size: 60px; font-weight: 400; line-height: 1; }
+:root[data-skin="doom"] :is(.hero-brief, .hero-vitals, .hero-actions) { margin-top: 10px; }
+:root[data-skin="doom"] #home-reactor { width: 240px; height: 240px; }
+:root[data-skin="doom"] .console-head h2 { font-size: 44px; font-weight: 400; letter-spacing: 8px; }
+:root[data-skin="doom"] .msg .who { font-size: 16px; }
+:root[data-skin="doom"] .msg.jarvis .who::before { content: "\25A0 "; }
+:root[data-skin="doom"] .console-input { box-shadow: none; }
+:root[data-skin="doom"] .cursor::after { content: "\2588"; }
+:root[data-skin="doom"] .power-title h2 { font-size: 40px; font-weight: 400; }
+:root[data-skin="doom"] .pbtn .hx { clip-path: none; inset: 10px; background: rgba(var(--c-rgb), .55); }
+:root[data-skin="doom"] .pbtn .hx::after { clip-path: none; inset: 1px; background: rgba(var(--d1-rgb), .96); }
+:root[data-skin="doom"] .pbtn:hover .hx { background: var(--c); }
+:root[data-skin="doom"] .pbtn:hover .hx::after { background: rgba(var(--c-rgb), .2); }
+:root[data-skin="doom"] .pbtn svg { filter: none; }
+:root[data-skin="doom"] .pbtn span { font-size: 22px; }
+:root[data-skin="doom"] .pbtn span::before { content: "["; }
+:root[data-skin="doom"] .pbtn span::after { content: "]"; }
+:root[data-skin="doom"] .voice-status { letter-spacing: 6px; font-size: 30px; }
+:root[data-skin="doom"] #boot { place-items: start; }
+:root[data-skin="doom"] #boot canvas { position: absolute; right: 8vw; top: 50%; transform: translateY(-50%); width: min(420px, 40vmin); height: min(420px, 40vmin); }
+:root[data-skin="doom"] #boot .boot-text { left: 7vw; top: 12vh; bottom: auto; transform: none; text-align: left; width: auto; }
+:root[data-skin="doom"] #boot h1 { font-size: 72px; font-weight: 400; letter-spacing: 12px; text-shadow: var(--glow); }
+:root[data-skin="doom"] #boot .lines { font-size: 24px; letter-spacing: 1px; min-height: 0; }
+:root[data-skin="doom"] .term-stack { background: rgba(var(--d0-rgb), .92); }
+
+/* ---------- SNAKE.EXE (js/snake.js): this theme only ---------- */
+.snake-panel { height: 100%; min-height: 420px; display: flex; flex-direction: column; }
+#snake-canvas { flex: 1; min-height: 0; width: 100%; cursor: pointer; touch-action: none; }
+.snake-bar { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.snake-say { flex: 1; color: var(--c-bright); font-size: 20px; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

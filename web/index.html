@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en" data-skin="jarvis">
+<head>
+<meta charset="utf-8">
+<title>J.A.R.V.I.S.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="vendor/xterm/xterm.css">
+<link rel="stylesheet" href="css/jarvis.css">
+<link rel="stylesheet" href="css/celestia.css">
+<link rel="stylesheet" href="css/doom.css">
+<link rel="stylesheet" href="css/asahina.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-systems" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></g></symbol>
+  <symbol id="i-files" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 6.5V18a1.5 1.5 0 0 0 1.5 1.5h15A1.5 1.5 0 0 0 21 18V9a1.5 1.5 0 0 0-1.5-1.5H12L10 5H4.5A1.5 1.5 0 0 0 3 6.5z"/><path d="M3 10h18"/></g></symbol>
+  <symbol id="i-procs" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-8 4 16 3-8h6"/></g></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2.5v9"/><path d="M6.3 5.8a8 8 0 1 0 11.4 0"/></g></symbol>
+  <symbol id="i-console" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="1.5"/><path d="M6.5 9l3.5 3-3.5 3M12.5 15.5h5"/></g></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="7"/></g></symbol>
+  <symbol id="i-min" viewBox="0 0 24 24"><path d="M5 17h14" stroke="currentColor" stroke-width="1.8" fill="none"/></symbol>
+  <symbol id="i-max" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></g></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" fill="none"/></symbol>
+  <symbol id="i-battery" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="18" height="10" rx="1.5"/><path d="M22 10.5v3"/></g></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor"/></symbol>
+  <symbol id="i-net" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M7 20V8M3.5 11.5L7 8l3.5 3.5M17 4v12M13.5 12.5L17 16l3.5-3.5"/></g></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M2.5 6V18.5a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1V8.5a1 1 0 0 0-1-1H11.5L9.5 5h-6a1 1 0 0 0-1 1z"/><path d="M2.5 10h19" opacity=".6"/><path d="M5 17h4" opacity=".7"/></g></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6 2.5h8l5 5V21a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 21z"/><path d="M14 2.5v5h5"/></g></symbol>
+  <symbol id="i-text" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6 2.5h8l5 5V21a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 21z"/><path d="M14 2.5v5h5M9 12h7M9 15h7M9 18h4"/></g></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><path d="M6 2.5h8l5 5V21a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 21z"/><path d="M14 2.5v5h5M10.5 12l-2 2.5 2 2.5M14 12l2 2.5-2 2.5"/></g></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="1"/><circle cx="8.5" cy="9.5" r="2"/><path d="M2.5 17l5.5-5 4 4 3-3 6 6"/></g></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="2.5" y="5" width="14" height="14" rx="1"/><path d="M16.5 10l5-3v10l-5-3z"/></g></symbol>
+  <symbol id="i-audio" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></g></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/><path d="M9 9l11-2"/></g></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="5" width="10" height="15" rx="1.6" transform="rotate(-12 8 12.5)"/><rect x="10" y="4" width="10" height="15" rx="1.6" transform="rotate(10 15 11.5)"/></g><path d="M15.2 8.6c-1.3 1.2-2.6 2-2.6 3.2 0 .9 1 1.4 1.8.8l-.4 1.6h2.4l-.4-1.6c.8.6 1.8.1 1.8-.8 0-1.2-1.3-2-2.6-3.2z" fill="currentColor" transform="rotate(10 15 11.5)"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></g></symbol>
+  <symbol id="i-swim" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="16.5" cy="6.5" r="2"/><path d="M4 12.5l5-3.5 3.5 2.5L15 9.5"/><path d="M2 16.5c1.7 0 1.7-1.2 3.3-1.2s1.7 1.2 3.4 1.2 1.7-1.2 3.3-1.2 1.7 1.2 3.4 1.2 1.6-1.2 3.3-1.2 1.6 1.2 3.3 1.2"/><path d="M2 20.5c1.7 0 1.7-1.2 3.3-1.2s1.7 1.2 3.4 1.2 1.7-1.2 3.3-1.2 1.7 1.2 3.4 1.2 1.6-1.2 3.3-1.2 1.6 1.2 3.3 1.2"/></g></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M12 3v3M12 8v2M12 12v2M10.5 16h3v3h-3z"/></g></symbol>
+  <symbol id="i-pdf" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6 2.5h8l5 5V21a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 21z"/><path d="M14 2.5v5h5"/><text x="8" y="17.5" font-size="5.5" fill="currentColor" stroke="none" font-family="sans-serif" font-weight="700">PDF</text></g></symbol>
+  <symbol id="i-document" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M6 2.5h8l5 5V21a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 21z"/><path d="M14 2.5v5h5M9 11h7v7H9zM9 14.5h7M12.5 11v7"/></g></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 11l9-7 9 7M5.5 9.5V20h13V9.5M10 20v-5h4v5"/></g></symbol>
+  <symbol id="i-desktop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="1"/><path d="M8 20h8M12 16.5V20"/></g></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></g></symbol>
+  <symbol id="i-drive" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2.5" y="13" width="19" height="7" rx="1"/><path d="M4.5 13L7 4h10l2.5 9"/><circle cx="17" cy="16.5" r=".8" fill="currentColor"/></g></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16M9.5 6.5V4h5v2.5M6 6.5l1 14h10l1-14M10 10.5v6M14 10.5v6"/></g></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10.5" rx="1"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5M12 14.5v3"/></g></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4H5v16h9M10 12h11M17.5 8.5L21 12l-3.5 3.5"/></g></symbol>
+  <symbol id="i-sleep" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></g></symbol>
+  <symbol id="i-hibernate" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M9.5 3.5L12 6l2.5-2.5M9.5 20.5L12 18l2.5 2.5"/></g></symbol>
+  <symbol id="i-hybrid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M14 13A6 6 0 1 1 7 6a5 5 0 0 0 7 7z"/><path d="M17 12v10M13 15l8 4M13 19l8-4" stroke-linecap="round"/></g></symbol>
+  <symbol id="i-reboot" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></g></symbol>
+  <symbol id="i-newfolder" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 6.5V18a1.5 1.5 0 0 0 1.5 1.5h15A1.5 1.5 0 0 0 21 18V9a1.5 1.5 0 0 0-1.5-1.5H12L10 5H4.5A1.5 1.5 0 0 0 3 6.5z"/><path d="M12 10.5v6M9 13.5h6"/></g></symbol>
+  <symbol id="i-newfile" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 2.5h8l5 5V21H6z"/><path d="M12.5 11v6M9.5 14h6"/></g></symbol>
+  <symbol id="i-rename" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></g></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="8" y="8" width="12.5" height="12.5" rx="1"/><path d="M16 8V4.5a1 1 0 0 0-1-1H4.5a1 1 0 0 0-1 1V15a1 1 0 0 0 1 1H8"/></g></symbol>
+  <symbol id="i-cut" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8 16L19 3M16 16L5 3"/></g></symbol>
+  <symbol id="i-paste" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M9 4H5v17h14V4h-4"/><rect x="9" y="2.5" width="6" height="3.5" rx=".5"/></g></symbol>
+  <symbol id="i-open" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></g></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="1.5"/><path d="M6.5 9l3.5 3-3.5 3M12.5 15.5h5"/></g></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></g></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></g></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></g></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></g></symbol>
+  <symbol id="i-fwd" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></g></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="7" height="7"/><rect x="13.5" y="3.5" width="7" height="7"/><rect x="3.5" y="13.5" width="7" height="7"/><rect x="13.5" y="13.5" width="7" height="7"/></g></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.5M3.5 12h.5M3.5 18h.5"/></g></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+  <symbol id="i-fan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1.8"/><path d="M12 10.2C11 6.5 12.5 3.6 15 4.2c2 .5 1.3 4-3 6zM13.8 12c3.7-1 6.6.5 6 3-.5 2-4 1.3-6-3zM12 13.8c1 3.7-.5 6.6-3 6-2-.5-1.3-4 3-6zM10.2 12c-3.7 1-6.6-.5-6-3 .5-2 4-1.3 6 3z"/></g></symbol>
+  <symbol id="i-kill" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></g></symbol>
+  <symbol id="i-screen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 5h16v11H4zM2 19h20"/></g></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 3v6M5 13v8M12 3v10M12 17v4M19 3v4M19 11v10"/><circle cx="5" cy="11" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="19" cy="9" r="2"/></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.5l8 3v6c0 5-3.5 8.6-8 10-4.5-1.4-8-5-8-10v-6z"/><path d="M13 7l-3.5 6H12l-1 4 3.5-6H12z" fill="currentColor" stroke="none"/></g></symbol>
+  <symbol id="i-apps" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.4"/><circle cx="12" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="12" cy="12" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="12" cy="18" r="2.4"/><circle cx="18" cy="18" r="2.4"/></g></symbol>
+  <symbol id="i-hud" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></g></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z" fill="currentColor"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M5 4.5v15l10-7.5zM16.5 4.5h3v15h-3z" fill="currentColor"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M19 4.5v15L9 12zM4.5 4.5h3v15h-3z" fill="currentColor"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 9.5h4l5-4.5v14l-5-4.5h-4z"/><path d="M16 9a4.5 4.5 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></g></symbol>
+  <symbol id="i-bright" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.2" r="1" fill="currentColor"/></g></symbol>
+  <symbol id="i-bt" viewBox="0 0 24 24"><path d="M7 7l10 10-5 4V3l5 4L7 17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 7.5h4l2-2.5h6l2 2.5h4v12H3z"/><circle cx="12" cy="13" r="3.8"/></g></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></g></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 18 8.8a4.9 4.9 0 0 1-.5 9.7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></g></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></g></symbol>
+</svg>
+
+<canvas id="bg"></canvas>
+<div class="vignette"></div>
+
+<!-- ======================= BOOT ======================= -->
+<div id="boot">
+  <canvas id="boot-canvas" width="1040" height="1040"></canvas>
+  <div class="boot-text">
+    <h1 id="boot-title" data-str="bootTitle">J.A.R.V.I.S.</h1>
+    <div class="lines" id="boot-lines"></div>
+  </div>
+  <div class="skip">CLICK TO SKIP</div>
+</div>
+
+<div id="app">
+  <!-- ======================= TOP ======================= -->
+  <header id="top">
+    <div class="logo">
+      <canvas id="logo-reactor" width="108" height="108"></canvas>
+      <div><h1 data-str="title">J.A.R.V.I.S.</h1><small data-str="subtitle">JUST A RATHER VERY INTELLIGENT SYSTEM</small></div>
+    </div>
+    <div class="top-center">
+      <div class="chip" id="top-cpu"><svg><use href="#i-systems"/></svg>CPU <b>--%</b></div>
+      <div class="chip" id="top-net"><svg><use href="#i-net"/></svg><b>--</b></div>
+      <div class="clock"><div class="t" id="clock-t">--:--:--</div><div class="d" id="clock-d">---</div></div>
+      <div class="chip" id="top-bat"><svg><use href="#i-battery"/></svg><b>--%</b></div>
+      <div class="chip" id="top-up">UPTIME <b>--</b></div>
+    </div>
+    <div class="top-right">
+      <select class="hud-input skin-select" id="skin-select" title="Theme"></select>
+      <button class="icon-btn mic-btn" title="Talk to J.A.R.V.I.S. (Ctrl+Space)"><svg><use href="#i-mic"/></svg></button>
+      <button class="icon-btn" title="Light / dark mode (Ctrl+T)" data-act="theme" id="theme-btn"><svg><use href="#i-moon"/></svg></button>
+      <button class="icon-btn" title="Settings" data-act="settings"><svg><use href="#i-settings"/></svg></button>
+      <button class="icon-btn" title="Minimize" data-act="minimize"><svg><use href="#i-min"/></svg></button>
+      <button class="icon-btn" title="Toggle fullscreen (F11)" data-act="fullscreen"><svg><use href="#i-max"/></svg></button>
+      <button class="icon-btn danger" title="Hide to tray" data-act="hide"><svg><use href="#i-close"/></svg></button>
+    </div>
+  </header>
+
+  <!-- ======================= NAV ======================= -->
+  <nav id="nav">
+    <button class="nav-btn" data-view="home"><i class="hex"></i><kbd>1</kbd><svg><use href="#i-hud"/></svg><span>HOME</span></button>
+    <button class="nav-btn active" data-view="systems"><i class="hex"></i><kbd>2</kbd><svg><use href="#i-systems"/></svg><span>SYSTEMS</span></button>
+    <button class="nav-btn" data-view="files"><i class="hex"></i><kbd>3</kbd><svg><use href="#i-files"/></svg><span>FILES</span></button>
+    <button class="nav-btn" data-view="terminal"><i class="hex"></i><kbd>4</kbd><svg><use href="#i-terminal"/></svg><span>TERMINAL</span></button>
+    <button class="nav-btn" data-view="apps"><i class="hex"></i><kbd>5</kbd><svg><use href="#i-apps"/></svg><span>APPS</span></button>
+    <button class="nav-btn" data-view="processes"><i class="hex"></i><kbd>6</kbd><svg><use href="#i-procs"/></svg><span>TASKS</span></button>
+    <button class="nav-btn" data-view="control"><i class="hex"></i><kbd>7</kbd><svg><use href="#i-sliders"/></svg><span>CONTROL</span></button>
+    <button class="nav-btn" data-view="protocols"><i class="hex"></i><kbd>8</kbd><svg><use href="#i-shield"/></svg><span>PROTOCOLS</span></button>
+    <button class="nav-btn" data-view="power"><i class="hex"></i><kbd>9</kbd><svg><use href="#i-power"/></svg><span>POWER</span></button>
+    <button class="nav-btn" data-view="console"><i class="hex"></i><kbd>0</kbd><svg><use href="#i-console"/></svg><span data-str="navConsole">JARVIS</span></button>
+    <button class="nav-btn" data-view="music"><i class="hex"></i><kbd>&#9834;</kbd><svg><use href="#i-music"/></svg><span>MUSIC</span></button>
+    <button class="nav-btn nav-swim" data-view="swim"><i class="hex"></i><svg><use href="#i-swim"/></svg><span>SWIM</span></button>
+    <button class="nav-btn nav-gamble" data-view="gamble"><i class="hex"></i><svg><use href="#i-cards"/></svg><span>GAMBLE</span></button>
+    <button class="nav-btn nav-invaders" data-view="invaders"><i class="hex"></i><svg><use href="#i-target"/></svg><span>DEFENSE</span></button>
+    <div class="nav-spacer"></div>
+    <div class="nav-mini" id="nav-mini">CPU <b>--</b>°<br>GPU <b>--</b>°</div>
+  </nav>
+
+  <!-- ======================= MAIN ======================= -->
+  <main id="main">
+    <!-- HOME -->
+    <section class="view" id="view-home">
+      <div class="home-grid">
+        <div class="panel home-hero">
+          <canvas id="home-reactor"></canvas>
+          <div class="hero-text">
+            <div class="hero-greet" id="home-greet">Good evening, sir.</div>
+            <div class="hero-time" id="home-time">--:--</div>
+            <div class="hero-date" id="home-date">--</div>
+            <div class="hero-brief" id="home-brief">Compiling briefing…</div>
+            <div class="hero-vitals" id="home-vitals"></div>
+            <div class="hero-actions">
+              <button class="hud-btn primary mic-btn"><svg><use href="#i-mic"/></svg><span data-str="talk">TALK TO J.A.R.V.I.S.</span></button>
+              <button class="hud-btn" id="home-speak"><svg><use href="#i-volume"/></svg>READ BRIEFING</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel home-weather">
+          <div class="panel-h"><h3>ATMOSPHERICS</h3><span class="sub" id="wx-loc">--</span></div>
+          <div class="wx-now">
+            <canvas id="wx-icon" width="200" height="200"></canvas>
+            <div><div class="wx-temp big" id="wx-temp">--</div><div class="wx-text" id="wx-text">--</div></div>
+            <dl class="kv wx-kv"><dt>Feels like</dt><dd id="wx-feels">--</dd><dt>Humidity</dt><dd id="wx-hum">--</dd>
+              <dt>Wind</dt><dd id="wx-wind">--</dd><dt>Sun</dt><dd id="wx-sun">--</dd></dl>
+          </div>
+          <canvas class="spark" id="wx-hours" style="height:70px"></canvas>
+          <div class="wx-days" id="wx-days"></div>
+        </div>
+        <div class="panel home-media">
+          <div class="panel-h"><h3>NOW PLAYING</h3><span class="sub" id="hm-player"></span></div>
+          <div class="media-card" id="home-media"></div>
+        </div>
+        <div class="panel home-updates">
+          <div class="panel-h"><h3>SYSTEM UPDATES</h3><span class="sub" id="upd-when">--</span></div>
+          <div id="upd-body" class="mono muted" style="font-size:13px">Checking repositories…</div>
+          <div class="info-actions">
+            <button class="hud-btn primary" id="upd-run"><svg><use href="#i-download"/></svg>UPDATE NOW</button>
+            <button class="hud-btn" id="upd-check"><svg><use href="#i-refresh"/></svg>CHECK</button>
+          </div>
+        </div>
+        <div class="panel home-quick">
+          <div class="panel-h"><h3>QUICK LAUNCH</h3><span class="sub">favorites &amp; most used</span></div>
+          <div class="quick-apps" id="home-apps"></div>
+          <div class="panel-h" style="margin-top:12px"><h3>PROTOCOLS</h3></div>
+          <div class="quick-protos" id="home-protos"></div>
+        </div>
+        <div class="panel home-recent">
+          <div class="panel-h"><h3>RECENT FILES</h3></div>
+          <div id="home-recent" class="recent-list"></div>
+        </div>
+        <div class="panel home-cal">
+          <div class="panel-h"><h3>CALENDAR</h3><span class="sub" id="cal-month">--</span></div>
+          <div class="cal" id="home-cal"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPS -->
+    <section class="view" id="view-apps">
+      <div class="panel apps-panel">
+        <div class="toolbar">
+          <input class="hud-input" id="apps-search" placeholder="Search applications…  (Enter launches the first match)" style="flex:1;font-size:17px;padding:10px 14px">
+          <span class="mono muted" id="apps-count" style="font-size:12px"></span>
+          <button class="hud-btn" id="apps-reload" title="Rescan"><svg><use href="#i-refresh"/></svg></button>
+        </div>
+        <div class="chips" id="apps-cats"></div>
+        <div class="apps-scroll scroll" id="apps-scroll"></div>
+      </div>
+    </section>
+
+    <!-- CONTROL -->
+    <section class="view" id="view-control">
+      <div class="ctl-grid">
+        <div class="panel ctl-audio">
+          <div class="panel-h"><h3>AUDIO</h3><button class="hud-btn" data-ctl="refresh"><svg><use href="#i-refresh"/></svg></button></div>
+          <div class="ctl-row"><button class="ctl-icon" data-ctl="mute-sink" title="Mute"><svg><use href="#i-volume"/></svg></button>
+            <input type="range" class="hud-range" id="vol-sink" min="0" max="100"><span class="ctl-val" id="vol-sink-v">--</span></div>
+          <select class="hud-input ctl-select" id="sink-select"></select>
+          <div class="ctl-row" style="margin-top:14px"><button class="ctl-icon" data-ctl="mute-source" title="Mute microphone"><svg><use href="#i-mic"/></svg></button>
+            <input type="range" class="hud-range" id="vol-source" min="0" max="100"><span class="ctl-val" id="vol-source-v">--</span></div>
+          <select class="hud-input ctl-select" id="source-select"></select>
+        </div>
+        <div class="panel ctl-display">
+          <div class="panel-h"><h3>DISPLAYS</h3></div>
+          <div id="bright-list"></div>
+          <div class="ctl-toggle-row"><div><svg><use href="#i-moon"/></svg> Night light <small class="muted mono" id="nl-temp"></small></div><div class="toggle" id="nl-toggle"></div></div>
+        </div>
+        <div class="panel ctl-toggles">
+          <div class="panel-h"><h3>QUICK TOGGLES</h3></div>
+          <div class="qt-grid">
+            <button class="qt" data-qt="dnd"><svg><use href="#i-bell"/></svg><span>DO NOT DISTURB</span></button>
+            <button class="qt" data-qt="wifi"><svg><use href="#i-wifi"/></svg><span>WI-FI</span></button>
+            <button class="qt" data-qt="bt"><svg><use href="#i-bt"/></svg><span>BLUETOOTH</span></button>
+            <button class="qt" data-qt="theme"><svg><use href="#i-sun"/></svg><span>LIGHT MODE</span></button>
+            <button class="qt" data-qt="shot"><svg><use href="#i-camera"/></svg><span>SCREENSHOT</span></button>
+            <button class="qt" data-qt="region"><svg><use href="#i-camera"/></svg><span>REGION SHOT</span></button>
+            <button class="qt" data-qt="lock"><svg><use href="#i-lock"/></svg><span>LOCK</span></button>
+            <button class="qt" data-qt="wake"><svg><use href="#i-mic"/></svg><span>WAKE WORD</span></button>
+          </div>
+        </div>
+        <div class="panel ctl-media">
+          <div class="panel-h"><h3>MEDIA</h3><span class="sub" id="cm-player"></span></div>
+          <div class="media-card" id="ctl-media"></div>
+        </div>
+        <div class="panel ctl-net">
+          <div class="panel-h"><h3>NETWORK</h3><span class="sub" id="net-ips"></span><button class="hud-btn" id="wifi-scan"><svg><use href="#i-refresh"/></svg>SCAN</button></div>
+          <div id="net-active" class="mono" style="font-size:13px;margin-bottom:8px"></div>
+          <div class="wifi-list scroll" id="wifi-list"></div>
+        </div>
+        <div class="panel ctl-bt">
+          <div class="panel-h"><h3>BLUETOOTH</h3><span class="sub" id="bt-state"></span></div>
+          <div id="bt-list" class="mono muted" style="font-size:13px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROTOCOLS -->
+    <section class="view" id="view-protocols">
+      <div class="proto-head">
+        <div><h2>PROTOCOLS</h2><p>One command, many actions. Say "engage house party protocol", or click ENGAGE.</p></div>
+        <div style="display:flex;gap:8px"><button class="hud-btn" id="proto-restore">RESTORE DEFAULTS</button>
+          <button class="hud-btn primary" id="proto-new"><svg><use href="#i-plus"/></svg>NEW PROTOCOL</button></div>
+      </div>
+      <div class="proto-grid" id="proto-grid"></div>
+    </section>
+
+    <!-- SYSTEMS -->
+    <section class="view active" id="view-systems">
+      <div class="sys-grid">
+        <div class="panel sys-cpu">
+          <div class="panel-h"><h3>PROCESSOR</h3><span class="sub" id="cpu-model">--</span></div>
+          <div class="gauge-wrap">
+            <canvas class="gauge" id="g-cpu" width="340" height="340"></canvas>
+            <dl class="kv">
+              <dt>Temp</dt><dd id="cpu-temp">--</dd>
+              <dt>Clock</dt><dd id="cpu-freq">--</dd>
+              <dt>Load avg</dt><dd id="cpu-load">--</dd>
+              <dt>Processes</dt><dd id="cpu-procs">--</dd>
+            </dl>
+          </div>
+          <div class="threads" id="threads"></div>
+          <canvas class="spark" id="sp-cpu" width="800" height="128"></canvas>
+          <div class="coretemps" id="coretemps"></div>
+        </div>
+
+        <div class="panel sys-core">
+          <div class="panel-h" style="width:100%"><h3>CORE TELEMETRY</h3><span class="sub" id="core-host">--</span></div>
+          <canvas class="core-canvas" id="core"></canvas>
+          <div class="core-legend">
+            <div><span class="lbl">CPU</span><span class="big" id="cl-cpu">--</span><span class="tmp" id="cl-cpu-t">--</span></div>
+            <div><span class="lbl">GPU</span><span class="big" id="cl-gpu">--</span><span class="tmp" id="cl-gpu-t">--</span></div>
+            <div><span class="lbl">RAM</span><span class="big" id="cl-ram">--</span><span class="tmp" id="cl-ram-t">--</span></div>
+            <div><span class="lbl">iGPU</span><span class="big" id="cl-igpu">--</span><span class="tmp" id="cl-igpu-t">--</span></div>
+          </div>
+        </div>
+
+        <div class="panel sys-gpu">
+          <div class="panel-h"><h3>GRAPHICS</h3><span class="state-badge" id="gpu-state">--</span></div>
+          <div class="gauge-wrap">
+            <canvas class="gauge" id="g-gpu" width="340" height="340"></canvas>
+            <dl class="kv">
+              <dt>Temp</dt><dd id="gpu-temp">--</dd>
+              <dt>Clock</dt><dd id="gpu-clock">--</dd>
+              <dt>Power</dt><dd id="gpu-power">--</dd>
+              <dt>Mem bus</dt><dd id="gpu-memutil">--</dd>
+            </dl>
+          </div>
+          <div class="mono muted" style="font-size:12px;margin-top:8px" id="gpu-name">--</div>
+          <div class="bar-row"><span class="l">VRAM</span><div class="bar" id="b-vram"><i></i></div><span class="v" id="gpu-vram">--</span></div>
+          <div class="bar-row"><span class="l">iGPU clock</span><div class="bar" id="b-igpu"><i></i></div><span class="v" id="igpu-freq">--</span></div>
+          <canvas class="spark" id="sp-gpu" width="800" height="128"></canvas>
+          <div class="mono muted" style="font-size:11px;margin-top:6px" id="gpu-note"></div>
+        </div>
+
+        <div class="sys-bottom">
+          <div class="panel">
+            <div class="panel-h"><h3>MEMORY</h3><span class="sub" id="ram-total">--</span></div>
+            <div class="gauge-wrap">
+              <canvas class="gauge" id="g-ram" width="340" height="340" style="width:130px;height:130px"></canvas>
+              <dl class="kv">
+                <dt>Used</dt><dd id="ram-used">--</dd>
+                <dt>Cache</dt><dd id="ram-cache">--</dd>
+                <dt>DIMM temp</dt><dd id="ram-temp">--</dd>
+              </dl>
+            </div>
+            <div class="bar-row"><span class="l">Swap</span><div class="bar" id="b-swap"><i></i></div><span class="v" id="swap-v">--</span></div>
+            <canvas class="spark" id="sp-ram" width="800" height="128"></canvas>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h3>STORAGE &amp; NETWORK</h3><span class="sub" id="nvme-temp">--</span></div>
+            <div id="disks"></div>
+            <div class="bar-row"><span class="l">Disk I/O</span><span class="mono" style="font-size:12px" id="disk-io">--</span><span></span></div>
+            <canvas class="spark" id="sp-net" width="800" height="128"></canvas>
+            <div class="bar-row" style="margin-top:2px"><span class="l">Net ↓/↑</span><span class="mono" style="font-size:12px;grid-column:span 2" id="net-rate">--</span></div>
+            <dl class="kv" style="margin-top:8px">
+              <dt>Received</dt><dd id="net-recv">--</dd>
+              <dt>Sent</dt><dd id="net-sent">--</dd>
+              <dt>Wi-Fi chip</dt><dd id="wifi-temp">--</dd>
+            </dl>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h3>POWER CELL</h3><span class="sub" id="bat-status">--</span></div>
+            <div class="gauge-wrap">
+              <canvas class="gauge" id="g-bat" width="340" height="340" style="width:130px;height:130px"></canvas>
+              <dl class="kv">
+                <dt>Source</dt><dd id="bat-src">--</dd>
+                <dt>Draw</dt><dd id="bat-power">--</dd>
+                <dt>Remaining</dt><dd id="bat-left">--</dd>
+              </dl>
+            </div>
+            <div id="fans"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h3>THERMAL MATRIX</h3><span class="sub">°C</span></div>
+            <div class="temps-list scroll" id="temps" style="overflow:auto;max-height:calc(100% - 40px)"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILES -->
+    <section class="view" id="view-files">
+      <div class="files-layout">
+        <div class="panel files-side">
+          <div class="panel-h"><h3>LOCATIONS</h3></div>
+          <div id="places" class="scroll" style="overflow:auto"></div>
+          <div style="flex:1"></div>
+          <div class="panel-h" style="margin-top:14px"><h3>CLIPBOARD</h3></div>
+          <div id="clip" class="mono muted" style="font-size:12px">Empty</div>
+        </div>
+        <div class="panel files-main">
+          <div class="toolbar">
+            <button class="hud-btn" data-f="back" title="Back (Alt+Left)"><svg><use href="#i-back"/></svg></button>
+            <button class="hud-btn" data-f="fwd" title="Forward (Alt+Right)"><svg><use href="#i-fwd"/></svg></button>
+            <button class="hud-btn" data-f="up" title="Parent folder (Backspace)"><svg><use href="#i-up"/></svg></button>
+            <button class="hud-btn" data-f="refresh" title="Refresh (F5)"><svg><use href="#i-refresh"/></svg></button>
+            <div class="crumbs" id="crumbs"></div>
+            <input class="hud-input" id="f-search" placeholder="Search in folder…" style="width:220px">
+            <button class="hud-btn" data-f="hidden" title="Show hidden files (Ctrl+H)"><svg><use href="#i-eye"/></svg></button>
+            <button class="hud-btn" data-f="viewmode" title="Grid / list"><svg><use href="#i-list"/></svg></button>
+          </div>
+          <div class="toolbar">
+            <button class="hud-btn" data-f="mkdir"><svg><use href="#i-newfolder"/></svg>NEW FOLDER</button>
+            <button class="hud-btn" data-f="mkfile"><svg><use href="#i-newfile"/></svg>NEW FILE</button>
+            <button class="hud-btn" data-f="open" data-need="1"><svg><use href="#i-open"/></svg>OPEN</button>
+            <button class="hud-btn" data-f="rename" data-need="1"><svg><use href="#i-rename"/></svg>RENAME</button>
+            <button class="hud-btn" data-f="copy" data-need="1"><svg><use href="#i-copy"/></svg>COPY</button>
+            <button class="hud-btn" data-f="cut" data-need="1"><svg><use href="#i-cut"/></svg>CUT</button>
+            <button class="hud-btn" data-f="paste" id="btn-paste"><svg><use href="#i-paste"/></svg>PASTE</button>
+            <button class="hud-btn danger" data-f="trash" data-need="1"><svg><use href="#i-trash"/></svg>TRASH</button>
+            <span style="flex:1"></span>
+            <button class="hud-btn" data-f="terminal"><svg><use href="#i-terminal"/></svg>TERMINAL</button>
+            <button class="hud-btn" data-f="dolphin"><svg><use href="#i-files"/></svg>DOLPHIN</button>
+          </div>
+          <div class="file-list scroll" id="file-list"></div>
+          <div class="mono muted" style="font-size:12px;padding-top:8px;border-top:1px dashed var(--c-dim)" id="f-status">--</div>
+        </div>
+        <div class="panel files-info">
+          <div class="panel-h"><h3>ANALYSIS</h3></div>
+          <div id="f-info" class="scroll" style="overflow:auto;flex:1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESSES -->
+    <section class="view" id="view-processes">
+      <div class="proc-layout">
+        <div class="panel" style="display:flex;flex-direction:column;min-height:0">
+          <div class="panel-h"><h3>ACTIVE PROCESSES</h3><span class="sub" id="p-total">--</span></div>
+          <div class="toolbar">
+            <input class="hud-input" id="p-filter" placeholder="Filter by name, command or PID…" style="flex:1">
+            <button class="hud-btn on" data-sort="cpu">CPU</button>
+            <button class="hud-btn" data-sort="mem">MEMORY</button>
+            <button class="hud-btn" data-sort="name">NAME</button>
+            <button class="hud-btn" data-sort="pid">PID</button>
+            <button class="hud-btn" id="p-term" disabled><svg><use href="#i-close"/></svg>END TASK</button>
+            <button class="hud-btn danger" id="p-kill" disabled><svg><use href="#i-kill"/></svg>FORCE KILL</button>
+          </div>
+          <div class="file-list scroll"><table class="file-table proc-table" id="p-table"></table></div>
+        </div>
+        <div class="proc-side" style="display:flex;flex-direction:column;gap:16px">
+          <div class="panel">
+            <div class="panel-h"><h3>CPU LOAD</h3><span class="sub" id="ps-cpu">--</span></div>
+            <canvas class="spark tall" id="sp-p-cpu" width="660" height="172"></canvas>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h3>MEMORY LOAD</h3><span class="sub" id="ps-ram">--</span></div>
+            <canvas class="spark tall" id="sp-p-ram" width="660" height="172"></canvas>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h3>GPU LOAD</h3><span class="sub" id="ps-gpu">--</span></div>
+            <canvas class="spark tall" id="sp-p-gpu" width="660" height="172"></canvas>
+          </div>
+          <div class="panel" style="flex:1">
+            <div class="panel-h"><h3>SELECTED</h3></div>
+            <div id="p-info" class="mono muted" style="font-size:12px;word-break:break-all">Select a process.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TERMINAL -->
+    <section class="view" id="view-terminal">
+      <div class="term-layout">
+        <div class="panel term-main">
+          <div class="term-bar">
+            <div class="term-tabs" id="term-tabs"></div>
+            <input class="hud-input" id="term-find" placeholder="Find…  (Enter / Shift+Enter)" style="width:200px">
+            <button class="hud-btn" data-tb="zoom-out" title="Smaller (Ctrl+-)">A−</button>
+            <span class="mono muted" id="term-font" style="font-size:12px">15px</span>
+            <button class="hud-btn" data-tb="zoom-in" title="Larger (Ctrl+=)">A+</button>
+          </div>
+          <div class="term-stack" id="term-stack"></div>
+          <div class="term-foot mono">
+            <span data-str="termFoot">SECURE SHELL · STARK INDUSTRIES</span>
+            <span>Ctrl+Shift+C/V copy/paste · Ctrl+Shift+T new tab · Ctrl+PgUp/PgDn switch</span>
+          </div>
+        </div>
+        <div class="term-side">
+          <div class="panel">
+            <div class="panel-h"><h3>SESSION</h3></div>
+            <div id="term-info" class="mono" style="font-size:12px"></div>
+            <div class="info-actions">
+              <button class="hud-btn" data-tb="copy">COPY</button>
+              <button class="hud-btn" data-tb="paste">PASTE</button>
+              <button class="hud-btn" data-tb="clear">CLEAR</button>
+              <button class="hud-btn" data-tb="files">BROWSE CWD</button>
+              <button class="hud-btn" data-tb="konsole">KONSOLE</button>
+            </div>
+          </div>
+          <div class="panel" style="flex:1;min-height:0;overflow:auto">
+            <div class="panel-h"><h3>QUICK OPS</h3></div>
+            <div class="suggest term-quick" id="term-quick"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POWER -->
+    <section class="view" id="view-power">
+      <div class="power-wrap">
+        <div class="power-title"><h2>POWER CONTROL</h2><p id="power-sub">ALL ACTIONS REQUIRE CONFIRMATION</p></div>
+        <div class="hex-grid" id="hex-grid">
+          <button class="pbtn" data-power="lock"><i class="hx"></i><svg><use href="#i-lock"/></svg><span>LOCK</span><small>Lock the session</small></button>
+          <button class="pbtn" data-power="logout"><i class="hx"></i><svg><use href="#i-logout"/></svg><span>LOG OUT</span><small>End the KDE session</small></button>
+          <button class="pbtn" data-power="suspend"><i class="hx"></i><svg><use href="#i-sleep"/></svg><span>SLEEP</span><small>Suspend to RAM</small></button>
+          <button class="pbtn" data-power="hibernate"><i class="hx"></i><svg><use href="#i-hibernate"/></svg><span>HIBERNATE</span><small>Suspend to disk</small></button>
+          <button class="pbtn" data-power="hybrid"><i class="hx"></i><svg><use href="#i-hybrid"/></svg><span>HYBRID</span><small>Sleep + disk image</small></button>
+          <button class="pbtn danger" data-power="reboot"><i class="hx"></i><svg><use href="#i-reboot"/></svg><span>RESTART</span><small>Reboot the system</small></button>
+          <button class="pbtn danger" data-power="poweroff"><i class="hx"></i><svg><use href="#i-power"/></svg><span>SHUT DOWN</span><small>Power off</small></button>
+        </div>
+        <div class="power-notes" id="power-notes"></div>
+      </div>
+    </section>
+
+    <!-- CONSOLE -->
+    <!-- MUSIC: Spotify with a cava visualizer and synced lyrics (js/music.js) -->
+    <section class="view" id="view-music">
+      <div class="music-grid" id="mu-grid">
+        <div class="panel music-now">
+          <div class="panel-h"><h3>NOW PLAYING</h3><span class="sub" id="mu-status">SPOTIFY</span></div>
+          <div class="mu-track">
+            <div class="media-art mu-art" id="mu-art"><svg><use href="#i-music"/></svg></div>
+            <div class="mu-meta">
+              <div class="mu-title" id="mu-title">--</div>
+              <div class="mu-artist" id="mu-artist">--</div>
+              <div class="mu-album" id="mu-album"></div>
+            </div>
+          </div>
+          <div class="mu-progress"><span id="mu-pos">0:00</span><div class="bar"><i id="mu-bar"></i></div><span id="mu-len">0:00</span></div>
+          <div class="media-btns mu-btns">
+            <button data-mu="Previous" title="Previous"><svg><use href="#i-prev"/></svg></button>
+            <button data-mu="PlayPause" title="Play / pause" id="mu-pp"><svg><use href="#i-play"/></svg></button>
+            <button data-mu="Next" title="Next"><svg><use href="#i-next"/></svg></button>
+          </div>
+          <button class="hud-btn mu-duet" id="mu-duet" title="Both characters dance together">DUET</button>
+          <canvas id="mu-dancer" title="Dancing to the beat"></canvas>
+        </div>
+        <div class="panel music-viz">
+          <div class="panel-h"><h3>VISUALIZER</h3><span class="sub" id="mu-viz-state">CAVA</span></div>
+          <canvas id="mu-viz"></canvas>
+        </div>
+        <div class="panel music-lyrics">
+          <div class="panel-h"><h3>LYRICS</h3><span class="sub" id="mu-lyr-src"></span></div>
+          <div id="mu-lyrics" class="scroll"></div>
+        </div>
+      </div>
+      <div class="mu-off" id="mu-off">
+        <svg><use href="#i-music"/></svg>
+        <h2>SPOTIFY IS NOT RUNNING</h2>
+        <p>Start Spotify and this menu comes alive: a live visualizer, and lyrics that follow along with the song.</p>
+        <button class="hud-btn primary" id="mu-launch"><svg><use href="#i-play"/></svg>LAUNCH SPOTIFY</button>
+      </div>
+    </section>
+
+    <!-- SWIM DASH: Hina's endless-swim mini game, Aoi Asahina theme only (js/swim.js) -->
+    <section class="view" id="view-swim">
+      <div class="panel swim-panel">
+        <div class="panel-h"><h3>SWIM DASH</h3><span class="sub" id="swim-best"></span></div>
+        <canvas id="swim-canvas"></canvas>
+        <div class="swim-bar">
+          <span class="swim-keys">SPACE / ↑ leap · ↓ hold to dive · P pause</span>
+          <button class="hud-btn primary" id="swim-start">START</button>
+          <button class="hud-btn" id="swim-stop" disabled>STOP</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TWENTY-ONE: blackjack against Celestia, Celestia theme only (js/gamble.js) -->
+    <section class="view" id="view-gamble">
+      <div class="panel gc-panel">
+        <div class="panel-h"><h3>TWENTY-ONE</h3><span class="sub" id="gc-stats"></span></div>
+        <div class="gc-table">
+          <div class="gc-host">
+            <div class="gc-portrait-wrap" id="gc-portrait-wrap"><canvas id="gc-portrait" title="Celestia Ludenberg"></canvas></div>
+            <div class="gc-say" id="gc-say"></div>
+          </div>
+          <div class="gc-felt">
+            <div class="gc-row"><div class="gc-label">CELESTIA <b id="gc-dtotal"></b></div><div class="gc-hand" id="gc-dealer"></div></div>
+            <div class="gc-mid"><span class="gc-rules">BLACKJACK PAYS 3 TO 2 · CELESTIA STANDS ON ALL 17s</span><div class="gc-result" id="gc-result"></div></div>
+            <div class="gc-row"><div class="gc-hand" id="gc-player"></div><div class="gc-label">YOU <b id="gc-ptotal"></b></div></div>
+          </div>
+        </div>
+        <div class="gc-bar">
+          <div class="gc-purse"><span>BANK <b id="gc-bank"></b></span><span>BET <b id="gc-bet"></b></span></div>
+          <div class="gc-chips" id="gc-chips"></div>
+          <button class="hud-btn" id="gc-clear">CLEAR</button>
+          <span class="gc-spacer"></span>
+          <button class="hud-btn primary" id="gc-deal">DEAL</button>
+          <button class="hud-btn" id="gc-hit">HIT</button>
+          <button class="hud-btn" id="gc-stand">STAND</button>
+          <button class="hud-btn" id="gc-double">DOUBLE</button>
+        </div>
+        <div class="gc-keys">1–4 add a chip · C clear · SPACE deal / stand · H hit · S stand · D double</div>
+      </div>
+    </section>
+
+    <!-- SNAKE.EXE: Doombot-convoy Snake, D.O.O.M. theme only (js/snake.js) -->
+    <section class="view" id="view-snake">
+      <div class="panel snake-panel">
+        <div class="panel-h"><h3>SNAKE.EXE</h3><span class="sub" id="snake-best"></span></div>
+        <canvas id="snake-canvas"></canvas>
+        <div class="snake-bar">
+          <span class="snake-say" id="snake-say"></span>
+          <button class="hud-btn primary" id="snake-start">START</button>
+          <button class="hud-btn" id="snake-stop" disabled>QUIT</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEFENSE GRID: Space Invaders against the Chitauri, J.A.R.V.I.S. theme only (js/invaders.js) -->
+    <section class="view" id="view-invaders">
+      <div class="panel inv-panel">
+        <div class="panel-h"><h3>DEFENSE GRID</h3><span class="sub" id="inv-best"></span></div>
+        <canvas id="inv-canvas"></canvas>
+        <div class="inv-bar">
+          <span class="inv-say" id="inv-say"></span>
+          <button class="hud-btn primary" id="inv-start">LAUNCH</button>
+          <button class="hud-btn" id="inv-stop" disabled>STAND DOWN</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-console">
+      <div class="console-layout">
+        <div class="panel console-main">
+          <div class="console-head">
+            <canvas id="voice-orb" width="280" height="280"></canvas>
+            <div><h2 data-str="consoleTitle">J.A.R.V.I.S.</h2><p id="console-greet">Awaiting instructions.</p></div>
+          </div>
+          <div id="log" class="scroll"></div>
+          <form class="console-input" id="console-form" autocomplete="off">
+            <span class="pr">&gt;</span>
+            <input id="console-in" data-str-ph="ask" placeholder="Ask JARVIS… e.g. &quot;status&quot;, &quot;open downloads&quot;, &quot;launch firefox&quot;" spellcheck="false">
+            <button class="hud-btn mic-btn" type="button" title="Speak (Ctrl+Space)"><svg><use href="#i-mic"/></svg></button>
+            <button class="hud-btn primary" type="submit">EXECUTE</button>
+          </form>
+        </div>
+        <div class="console-side" style="display:flex;flex-direction:column;gap:16px;min-height:0">
+          <div class="panel">
+            <div class="panel-h"><h3>QUICK COMMANDS</h3></div>
+            <div class="suggest" id="suggest"></div>
+          </div>
+          <div class="panel" style="flex:1;min-height:0;overflow:auto">
+            <div class="panel-h"><h3>PROTOCOLS</h3></div>
+            <pre class="mono muted" style="font-size:12px;white-space:pre-wrap;margin:0" id="help-text"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- D.O.O.M. theme only: command line + F-key bar in place of the side menu -->
+  <div id="doom-bar">
+    <div class="doom-out" id="doom-out">D.O.O.M. v4.04 READY. TYPE HELP FOR A LIST OF COMMANDS.</div>
+    <form id="doom-form" autocomplete="off"><label for="doom-in">DOOM:\&gt;</label>
+      <input id="doom-in" spellcheck="false" placeholder="sys · files · term · status · launch firefox · help"></form>
+    <div id="fkeys"></div>
+  </div>
+  <!-- Aoi Asahina theme only: pixel Hina above the status bar, and the swim-practice timer (js/hina.js) -->
+  <div id="hina-pal">
+    <div id="hina-bubble"></div>
+    <canvas id="hina-buddy" width="96" height="146" title="Hina! (click her)"></canvas>
+  </div>
+  <div id="hina-practice" class="panel">
+    <div class="hp-head"><span>SWIM PRACTICE</span><span id="hp-lap">LAP 1</span></div>
+    <div id="hp-phase">IN THE WATER</div>
+    <div id="hp-time">25:00</div>
+    <div class="bar"><i id="hp-bar"></i></div>
+    <div class="hp-btns"><button class="hud-btn" id="hp-pause">PAUSE</button><button class="hud-btn" id="hp-stop">STOP</button></div>
+  </div>
+  <footer id="bot">
+    <span class="status" id="bot-status" data-str="nominal">ALL SYSTEMS NOMINAL</span>
+    <div id="ticker"><span id="ticker-text"></span></div>
+    <span class="host" id="bot-host">--</span>
+  </footer>
+</div>
+
+<!-- settings drawer -->
+<aside id="settings">
+  <div class="panel-h"><h3>CONFIGURATION</h3><button class="icon-btn" data-act="settings"><svg><use href="#i-close"/></svg></button></div>
+  <div class="setting"><div><label>Theme</label><small>Whole-app style (also in the top bar)</small></div>
+    <select class="hud-input" id="set-skin"></select></div>
+  <div class="setting"><div><label>Appearance</label><small>Dark, light, or follow KDE / time of day</small></div>
+    <select class="hud-input" id="set-theme"><option value="dark">Dark</option><option value="light">Light</option><option value="system">Match KDE</option><option value="time">Day / night</option></select></div>
+  <div class="setting"><div><label>Accent</label><small>HUD colour scheme (J.A.R.V.I.S. theme)</small></div>
+    <select class="hud-input" id="set-accent"></select></div>
+  <div class="setting"><div><label>Start at login</label><small>Launch J.A.R.V.I.S. when you sign in</small></div><div class="toggle" data-set="autostart"></div></div>
+  <div class="setting"><div><label>Fullscreen</label><small>Fill the whole display (F11)</small></div><div class="toggle" data-set="fullscreen"></div></div>
+  <div class="setting"><div><label>Terminal prompt</label><small>J.A.R.V.I.S. bash prompt + banner (new tabs)</small></div><div class="toggle" data-set="terminal_prompt"></div></div>
+  <div class="setting"><div><label>Boot animation</label><small>Play the start-up sequence</small></div><div class="toggle" data-set="boot_animation"></div></div>
+  <div class="setting"><div><label>Voice replies</label><small id="voice-note">Speak responses (offline British voice)</small></div><div class="toggle" data-set="voice"></div></div>
+  <div class="setting"><div><label>Wake word "Jarvis"</label><small>Always listen for "Jarvis" (offline, ~3% CPU)</small></div><div class="toggle" data-set="wake_word"></div></div>
+  <div class="setting"><div><label>Speech rate</label><small>How fast J.A.R.V.I.S. talks</small></div>
+    <select class="hud-input" id="set-rate"><option value="0.85">Slow</option><option value="1">Normal</option><option value="1.15">Brisk</option></select></div>
+  <div class="setting"><div><label>Display</label><small>Screen J.A.R.V.I.S. lives on</small></div>
+    <select class="hud-input" id="set-screen"><option value="auto">Automatic (built-in / main screen)</option></select></div>
+  <div class="setting"><div><label>Safe graphics</label><small>CPU rendering if the HUD stays blank or flickers on your GPU (applies after a restart)</small></div><div class="toggle" data-set="software_render"></div></div>
+  <div class="setting"><div><label>Refresh rate</label><small>Telemetry sampling interval</small></div>
+    <select class="hud-input" id="set-interval"><option value="500">0.5 s</option><option value="1000">1 s</option><option value="2000">2 s</option><option value="5000">5 s</option></select></div>
+  <div class="setting"><div><label>FPS mode</label><small>Animation frame rate for the whole app; lower = less CPU / battery (MUSIC always runs at 60)</small></div>
+    <select class="hud-input" id="set-fps"><option value="60">60 fps (fluid)</option><option value="30">30 fps (smooth)</option><option value="20">20 fps (balanced)</option></select></div>
+  <div class="setting"><div><label>Eco mode on battery</label><small>Cap animations at 10 fps when unplugged</small></div><div class="toggle" data-set="eco_on_battery"></div></div>
+  <div class="setting"><div><label>Spoken briefing</label><small>Read the HOME briefing at start-up</small></div><div class="toggle" data-set="speak_briefing"></div></div>
+  <div class="setting"><div><label>System alerts</label><small>Battery, thermal, disk and memory warnings</small></div><div class="toggle" data-set="alerts"></div></div>
+  <div class="setting"><div><label>Weather location</label><small>Blank = detect automatically</small></div><input class="hud-input" id="set-wx" placeholder="auto" style="width:160px"></div>
+  <div class="setting"><div><label>Temperature warning</label><small>Amber above this (°C)</small></div><input class="hud-input" type="number" id="set-warn" style="width:80px"></div>
+  <div class="setting"><div><label>Temperature critical</label><small>Red above this (°C)</small></div><input class="hud-input" type="number" id="set-crit" style="width:80px"></div>
+  <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap">
+    <button class="hud-btn" data-act="replace"><svg><use href="#i-screen"/></svg>MOVE TO SCREEN</button>
+    <button class="hud-btn danger" data-act="quit"><svg><use href="#i-power"/></svg>QUIT J.A.R.V.I.S.</button>
+  </div>
+  <p class="mono muted" style="font-size:11px;margin-top:20px;line-height:1.6">Closing the window hides J.A.R.V.I.S. to the system tray. Use the tray icon to bring it back, or Ctrl+Q to quit.</p>
+</aside>
+
+<div id="voice-overlay">
+  <div class="voice-box">
+    <canvas id="voice-canvas"></canvas>
+    <div class="voice-status" id="voice-status">STANDBY</div>
+    <div class="voice-text" id="voice-text"></div>
+    <div class="voice-reply" id="voice-reply"></div>
+    <div class="voice-hint">Speak a command · pause to finish · click outside to cancel</div>
+  </div>
+</div>
+<div id="ctx"></div>
+<div id="editor"><div class="panel editor-box" id="editor-box"></div></div>
+<div id="modal"><div class="panel modal-box" id="modal-box"></div></div>
+<div id="toasts"></div>
+<div class="scanlines"></div>
+
+<script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+<script src="vendor/xterm/xterm.js"></script>
+<script src="vendor/xterm/addon-fit.js"></script>
+<script src="vendor/xterm/addon-web-links.js"></script>
+<script src="vendor/xterm/addon-search.js"></script>
+<script src="js/api.js"></script>
+<script src="js/hud.js"></script>
+<script src="js/skins.js"></script>
+<script src="js/boot.js"></script>
+<script src="js/systems.js"></script>
+<script src="js/files.js"></script>
+<script src="js/processes.js"></script>
+<script src="js/power.js"></script>
+<script src="js/console.js"></script>
+<script src="js/terminal.js"></script>
+<script src="js/voiceui.js"></script>
+<script src="js/home.js"></script>
+<script src="js/apps.js"></script>
+<script src="js/control.js"></script>
+<script src="js/protocols.js"></script>
+<script src="js/music.js"></script>
+<script src="js/dance.js"></script>
+<script src="js/hina.js"></script>
+<script src="js/swim.js"></script>
+<script src="js/gamble.js"></script>
+<script src="js/snake.js"></script>
+<script src="js/invaders.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

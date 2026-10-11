@@ -1,0 +1,235 @@
+/* Celestia Ludenberg theme (Danganronpa): gothic lolita, black and crimson with gold filigree,
+   playing cards and roulette. Everything here is scoped to [data-skin="celestia"]; colours come
+   from the palette in js/skins.js via the same tokens the J.A.R.V.I.S. theme uses. */
+@font-face { font-family: "Cinzel"; src: url("../fonts/celestia/Cinzel.ttf"); font-weight: 400 900; }
+@font-face { font-family: "Cormorant Garamond"; src: url("../fonts/celestia/CormorantGaramond.ttf"); font-weight: 300 700; }
+@font-face { font-family: "EB Garamond"; src: url("../fonts/celestia/EBGaramond.ttf"); font-weight: 400 800; }
+@font-face { font-family: "UnifrakturMaguntia"; src: url("../fonts/celestia/UnifrakturMaguntia.ttf"); }
+
+:root[data-skin="celestia"] {
+  --font-display: "Cinzel", "EB Garamond", serif;
+  --font-ui: "Cormorant Garamond", "EB Garamond", serif;
+  --font-mono: "EB Garamond", "Cormorant Garamond", serif;
+  --font-gothic: "UnifrakturMaguntia", "Cinzel", serif;
+  --gold-rgb: 217, 180, 108;
+  --gold: rgb(var(--gold-rgb));
+  --orn-tl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='' fill='none' stroke='%23d9b46c' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%23d9b46c'/%3E%3C/svg%3E");
+  --orn-tr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='translate%2834 0%29 scale%28-1 1%29' fill='none' stroke='%23d9b46c' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='translate%2834 0%29 scale%28-1 1%29' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%23d9b46c'/%3E%3C/svg%3E");
+  --orn-bl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='translate%280 34%29 scale%281 -1%29' fill='none' stroke='%23d9b46c' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='translate%280 34%29 scale%281 -1%29' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%23d9b46c'/%3E%3C/svg%3E");
+  --orn-br: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='translate%2834 34%29 scale%28-1 -1%29' fill='none' stroke='%23d9b46c' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='translate%2834 34%29 scale%28-1 -1%29' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%23d9b46c'/%3E%3C/svg%3E");
+}
+:root[data-skin="celestia"][data-theme="light"] {
+  --gold-rgb: 154, 111, 34;
+  --orn-tl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='' fill='none' stroke='%239a6f22' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%239a6f22'/%3E%3C/svg%3E");
+  --orn-tr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='translate%2834 0%29 scale%28-1 1%29' fill='none' stroke='%239a6f22' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='translate%2834 0%29 scale%28-1 1%29' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%239a6f22'/%3E%3C/svg%3E");
+  --orn-bl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='translate%280 34%29 scale%281 -1%29' fill='none' stroke='%239a6f22' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='translate%280 34%29 scale%281 -1%29' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%239a6f22'/%3E%3C/svg%3E");
+  --orn-br: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg transform='translate%2834 34%29 scale%28-1 -1%29' fill='none' stroke='%239a6f22' stroke-linecap='round'%3E%3Cpath d='M1.5 32V1.5H32' stroke-width='1.6'/%3E%3Cpath d='M5 20V5h15' stroke-width='.9'/%3E%3Cpath d='M5 13c5 0 8-3 8-8' stroke-width='.9'/%3E%3Cpath d='M1.5 32c2-4 2-6 0-9M32 1.5c-4 2-6 2-9 0' stroke-width='.9'/%3E%3C/g%3E%3Cpath transform='translate%2834 34%29 scale%28-1 -1%29' d='M10.5 6.5l2.6 2.6-2.6 2.6-2.6-2.6z' fill='%239a6f22'/%3E%3C/svg%3E");
+}
+:root[data-skin="celestia"] body { font-size: 17px; font-weight: 600; font-variant-numeric: lining-nums tabular-nums; }
+/* things that need real column alignment keep a monospace face */
+:root[data-skin="celestia"] :is(pre, .preview, .proc-table td.cmd, #term-info) { font-family: "JetBrains Mono", monospace; font-weight: 400; }
+:root[data-skin="celestia"] .scanlines { display: none; }
+:root[data-skin="celestia"] .vignette {
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(var(--d2-rgb), .22), transparent 62%),
+    radial-gradient(ellipse at center, transparent 50%, rgba(var(--shade-rgb), var(--vignette-alpha)) 100%); }
+
+/* ---------- frame ---------- */
+:root[data-skin="celestia"] #top { background: linear-gradient(to bottom, rgba(var(--d2-rgb), .7), rgba(var(--d1-rgb), .25));
+  border-bottom-color: rgba(var(--gold-rgb), .35); }
+:root[data-skin="celestia"] #top::after { background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--c) 50%, var(--gold) 70%, transparent); height: 2px; bottom: -2px; }
+:root[data-skin="celestia"] .logo h1 { font-family: var(--font-gothic); font-weight: 400; font-size: 31px; letter-spacing: 1px;
+  color: var(--c-bright); text-shadow: 0 0 10px rgba(var(--c-rgb), .6); white-space: nowrap; }
+:root[data-skin="celestia"] .logo small { font-family: var(--font-display); font-size: 10px; letter-spacing: 4px; color: var(--c); }
+:root[data-skin="celestia"] .clock .t { font-weight: 700; letter-spacing: 3px; }
+:root[data-skin="celestia"] .clock .d { font-family: var(--font-display); font-size: 11px; }
+:root[data-skin="celestia"] .chip { font-size: 15px; }
+:root[data-skin="celestia"] :is(.icon-btn, .hud-btn) { clip-path: none; border-radius: 3px; }
+:root[data-skin="celestia"] .icon-btn:hover { border-color: rgba(var(--gold-rgb), .5); }
+:root[data-skin="celestia"] #nav, :root[data-skin="celestia"] #bot { border-color: rgba(var(--gold-rgb), .3); }
+:root[data-skin="celestia"] #nav { background: linear-gradient(to right, rgba(var(--d2-rgb), .6), rgba(var(--d1-rgb), .15)); }
+:root[data-skin="celestia"] #bot .status { color: var(--c-bright); font-family: var(--font-display); letter-spacing: 3px; font-size: 11px; }
+:root[data-skin="celestia"] #bot .status::before { content: "\2666"; width: auto; height: auto; border-radius: 0; background: none;
+  box-shadow: none; color: var(--c); text-shadow: 0 0 6px var(--c); }
+
+/* theme dropdown in the top bar */
+.skin-select { min-width: 0 !important; height: 34px; padding: 4px 8px; margin-right: 6px; font-size: 13px; cursor: pointer; }
+:root[data-skin="celestia"] .skin-select { font-family: var(--font-display); font-size: 12px; border-color: rgba(var(--gold-rgb), .45); border-radius: 3px; }
+
+/* nav: playing cards instead of hexagons, each with a suit pip */
+:root[data-skin="celestia"] .nav-btn .hex { inset: 3px 11px; clip-path: none; border-radius: 6px; background: rgba(var(--gold-rgb), .28); }
+:root[data-skin="celestia"] .nav-btn .hex::after { clip-path: none; border-radius: 5px; }
+:root[data-skin="celestia"] .nav-btn:hover .hex { background: rgba(var(--gold-rgb), .55); }
+:root[data-skin="celestia"] .nav-btn.active .hex { background: var(--gold); }
+:root[data-skin="celestia"] .nav-btn.active .hex::after { background: linear-gradient(160deg, rgba(var(--d2-rgb), .95), rgba(var(--d0-rgb), .95)); }
+:root[data-skin="celestia"] .nav-btn.active { filter: drop-shadow(0 0 6px rgba(var(--c-rgb), .55)); }
+:root[data-skin="celestia"] .nav-btn span { font-size: 9px; letter-spacing: 1px; font-weight: 700; }
+:root[data-skin="celestia"] .nav-btn kbd { top: 7px; right: 16px; font-family: var(--font-display); }
+:root[data-skin="celestia"] .nav-btn::before { position: absolute; left: 16px; top: 5px; z-index: 1; font-size: 11px; line-height: 1;
+  font-family: "DejaVu Sans", sans-serif; color: var(--muted); }
+:root[data-skin="celestia"] .nav-btn:nth-of-type(4n+1)::before { content: "\2660"; }
+:root[data-skin="celestia"] .nav-btn:nth-of-type(4n+2)::before { content: "\2665"; color: var(--c); }
+:root[data-skin="celestia"] .nav-btn:nth-of-type(4n+3)::before { content: "\2663"; }
+:root[data-skin="celestia"] .nav-btn:nth-of-type(4n)::before { content: "\2666"; color: var(--c); }
+
+/* ---------- panels: double frame with gold filigree corners (static backgrounds, no clip-path) ---------- */
+:root[data-skin="celestia"] .panel { border: 1px solid rgba(var(--c-rgb), .38);
+  box-shadow: inset 0 0 0 3px rgba(var(--d0-rgb), .55), inset 0 0 0 4px rgba(var(--gold-rgb), .16);
+  background:
+    var(--orn-tl) top 2px left 2px / 34px no-repeat, var(--orn-tr) top 2px right 2px / 34px no-repeat,
+    var(--orn-bl) bottom 2px left 2px / 34px no-repeat, var(--orn-br) bottom 2px right 2px / 34px no-repeat,
+    radial-gradient(ellipse at 50% 0%, rgba(var(--c-rgb), .07), transparent 70%),
+    linear-gradient(165deg, rgba(var(--d2-rgb), .5), rgba(var(--d1-rgb), .62)); }
+:root[data-skin="celestia"] .panel-h { border-bottom: 1px solid rgba(var(--gold-rgb), .25); padding-left: 14px; }
+:root[data-skin="celestia"] .panel-h h3 { font-size: 14px; font-weight: 700; letter-spacing: 2.5px; color: var(--c-bright); text-shadow: none; }
+:root[data-skin="celestia"] .panel-h h3::before { content: "\2666\00a0"; color: var(--c); font-size: 11px; font-family: "DejaVu Sans", sans-serif; }
+:root[data-skin="celestia"] .panel-h .sub { font-size: 13px; font-style: italic; }
+:root[data-skin="celestia"] .kv dt { font-size: 13px; }
+:root[data-skin="celestia"] .kv dd { font-size: 16px; }
+:root[data-skin="celestia"] .bar { clip-path: none; border-radius: 4px; }
+:root[data-skin="celestia"] .bar > i { border-radius: 4px; background: linear-gradient(90deg, rgba(var(--c-rgb), .45), var(--c) 85%, var(--gold)); }
+:root[data-skin="celestia"] .bar-row, :root[data-skin="celestia"] .temps-list, :root[data-skin="celestia"] .coretemps div { font-size: 13px; }
+:root[data-skin="celestia"] .thread i { background: linear-gradient(to top, var(--c), rgba(var(--gold-rgb), .35)); }
+:root[data-skin="celestia"] .state-badge { border-radius: 3px; }
+
+/* buttons & inputs */
+:root[data-skin="celestia"] :is(.hud-btn, .pbtn, .suggest button, .chip, .crumbs a):not(.danger) { color: rgba(var(--gold-rgb), .9); }
+:root[data-skin="celestia"] .chip b { color: var(--hi); }
+:root[data-skin="celestia"] .hud-btn { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; border-color: rgba(var(--gold-rgb), .35); }
+:root[data-skin="celestia"] .hud-btn.primary { border-color: var(--c); background: rgba(var(--c-rgb), .14); }
+:root[data-skin="celestia"] .hud-btn:hover:not(:disabled) { background: rgba(var(--c-rgb), .32); border-color: var(--gold); }
+:root[data-skin="celestia"] .hud-input { font-family: var(--font-ui); font-size: 16px; border-radius: 3px; border-color: rgba(var(--gold-rgb), .35); }
+:root[data-skin="celestia"] .hud-input:focus { border-color: var(--gold); }
+:root[data-skin="celestia"] select.hud-input:disabled { opacity: .4; }
+:root[data-skin="celestia"] .hud-range::-webkit-slider-thumb { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); width: 16px; background: var(--gold); }
+:root[data-skin="celestia"] .toggle { border-radius: 12px; border-color: rgba(var(--gold-rgb), .5); }
+:root[data-skin="celestia"] .toggle::after { border-radius: 50%; }
+:root[data-skin="celestia"] .toggle.on::after { background: var(--gold); }
+:root[data-skin="celestia"] :is(.chips button, .qt, .suggest button, .media-btns button, .ctl-icon, .step .ops button) { border-radius: 3px; }
+:root[data-skin="celestia"] .qt span, :root[data-skin="celestia"] .chips button { font-weight: 700; }
+:root[data-skin="celestia"] #settings { border-left-color: rgba(var(--gold-rgb), .5); }
+:root[data-skin="celestia"] .toast { border-color: rgba(var(--gold-rgb), .45); border-left-color: var(--c); font-family: var(--font-ui); font-size: 16px; }
+:root[data-skin="celestia"] #ctx { border-color: rgba(var(--gold-rgb), .5); font-family: var(--font-ui); }
+:root[data-skin="celestia"] .cal .d { border-radius: 2px; }
+
+/* ---------- views ---------- */
+:root[data-skin="celestia"] .hero-greet { font-family: var(--font-ui); font-style: italic; font-size: 34px; letter-spacing: 1px; text-shadow: none; }
+:root[data-skin="celestia"] .hero-time { font-size: 58px; margin-top: 0; }
+:root[data-skin="celestia"] .hero-date { font-family: var(--font-display); font-size: 14px; }
+:root[data-skin="celestia"] .hero-brief { font-size: 19px; line-height: 1.35; margin-top: 10px; }
+:root[data-skin="celestia"] .hero-vitals .v span { font-family: var(--font-display); font-size: 10px; }
+:root[data-skin="celestia"] .console-head h2 { font-family: var(--font-gothic); font-weight: 400; font-size: 40px; letter-spacing: 1px; }
+:root[data-skin="celestia"] .console-head p { font-size: 16px; font-style: italic; }
+:root[data-skin="celestia"] #log { font-family: var(--font-ui); font-size: 19px; }
+:root[data-skin="celestia"] .console-input { border-color: rgba(var(--gold-rgb), .5); border-radius: 3px; }
+:root[data-skin="celestia"] .console-input input { font-family: var(--font-ui); font-size: 19px; }
+:root[data-skin="celestia"] .console-input .pr::before { content: "\2660"; font-family: "DejaVu Sans", sans-serif; }
+:root[data-skin="celestia"] .console-input .pr { font-size: 0; }
+:root[data-skin="celestia"] .console-input .pr::before { font-size: 16px; }
+:root[data-skin="celestia"] :is(.power-title h2, .proto-head h2, .modal-box h2, .editor-box h2) { letter-spacing: 6px; }
+:root[data-skin="celestia"] .voice-status { letter-spacing: 8px; }
+:root[data-skin="celestia"] .voice-text { font-style: italic; font-size: 34px; }
+:root[data-skin="celestia"] #boot h1 { font-family: var(--font-gothic); font-weight: 400; letter-spacing: 3px; font-size: 64px;
+  text-shadow: 0 0 14px rgba(var(--c-rgb), .8), 0 0 40px rgba(var(--c-rgb), .45); }
+:root[data-skin="celestia"] #boot .lines { font-family: var(--font-display); font-size: 14px; }
+:root[data-skin="celestia"] .term-foot { font-family: var(--font-display); font-size: 10px; }
+:root[data-skin="celestia"] .term-tab { border-radius: 3px 3px 0 0; }
+
+/* POWER: a hand of cards, suit pips in opposite corners */
+:root[data-skin="celestia"] .pbtn .hx { inset: 4px 16px; clip-path: none; border-radius: 12px; background: rgba(var(--gold-rgb), .45); }
+:root[data-skin="celestia"] .pbtn .hx::after { clip-path: none; inset: 2px; border-radius: 10px;
+  background: radial-gradient(circle at 50% 40%, rgba(var(--d2-rgb), .92), rgba(var(--d0-rgb), .97) 75%); }
+:root[data-skin="celestia"] .pbtn:hover .hx { background: var(--gold); }
+:root[data-skin="celestia"] .pbtn.danger .hx { background: rgba(var(--c-rgb), .6); }
+:root[data-skin="celestia"] .pbtn.danger:hover .hx { background: var(--c); }
+:root[data-skin="celestia"] .pbtn::before, :root[data-skin="celestia"] .pbtn::after { content: "\2660"; position: absolute; z-index: 1;
+  font-family: "DejaVu Sans", sans-serif; font-size: 20px; line-height: 1; color: var(--c-bright); }
+:root[data-skin="celestia"] .pbtn::before { top: 16px; left: 30px; }
+:root[data-skin="celestia"] .pbtn::after { bottom: 16px; right: 30px; transform: rotate(180deg); }
+:root[data-skin="celestia"] .pbtn:nth-child(4n+2)::before, :root[data-skin="celestia"] .pbtn:nth-child(4n+2)::after { content: "\2663"; }
+:root[data-skin="celestia"] .pbtn:nth-child(4n+3)::before, :root[data-skin="celestia"] .pbtn:nth-child(4n+3)::after { content: "\2666"; color: var(--c); }
+:root[data-skin="celestia"] .pbtn.danger::before, :root[data-skin="celestia"] .pbtn.danger::after { content: "\2665"; color: var(--c); }
+:root[data-skin="celestia"] .pbtn span { font-weight: 700; }
+/* PROTOCOLS, TERMINAL and CONTROL are too long for the card at full size: set them a little smaller */
+:root[data-skin="celestia"] .nav-btn[data-view="protocols"] span { font-size: 7.5px; letter-spacing: 0; }
+:root[data-skin="celestia"] .nav-btn:is([data-view="terminal"], [data-view="control"]) span { font-size: 8px; letter-spacing: 0; }
+
+/* MUSIC: Celestia dances under the track (js/dance.js) */
+:root[data-skin="celestia"] #mu-dancer { display: block; flex: 1; min-height: 160px; width: 100%; margin-top: 8px; }
+:root[data-skin="celestia"] .mu-art { width: 170px; height: 170px; }
+
+/* ---------- TWENTY-ONE: blackjack at Celestia's table (js/gamble.js) ---------- */
+/* its own menu card in this theme; twelve cards need slightly tighter gaps, as in Hina's theme */
+:root[data-skin="celestia"] .nav-gamble { display: flex; }
+:root[data-skin="celestia"] #nav { gap: 2px; padding-top: 8px; padding-bottom: 8px; }
+:root[data-skin="celestia"] .nav-btn { height: 74px; }
+
+.gc-panel { height: 100%; min-height: 520px; display: flex; flex-direction: column; }
+.gc-table { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(180px, 26%) 1fr; gap: 16px; margin-top: 12px; }
+.gc-host { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.gc-portrait-wrap { flex: 1; min-height: 140px; position: relative; border: 1px solid rgba(var(--gold-rgb), .35); border-radius: 6px;
+  background: radial-gradient(ellipse at 50% 70%, rgba(var(--c-rgb), .28), transparent 70%), rgba(var(--d0-rgb), .5); transform-origin: 50% 100%; }
+#gc-portrait { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; cursor: pointer; }
+.gc-portrait-wrap.talk { animation: gc-talk .5s ease-out; }
+.gc-portrait-wrap.rage { animation: gc-rage .09s linear 10; border-color: var(--c); box-shadow: 0 0 24px rgba(var(--c-rgb), .7) inset; }
+@keyframes gc-talk { 40% { transform: scale(1.02, .98); } }
+@keyframes gc-rage { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px) rotate(-.6deg); } 75% { transform: translateX(4px) rotate(.6deg); } }
+.gc-say { position: relative; min-height: 5.2em; padding: 12px 14px; border: 1px solid rgba(var(--gold-rgb), .45); border-radius: 6px;
+  background: rgba(var(--d1-rgb), .85); color: var(--hi); font-style: italic; font-size: 17px; line-height: 1.35; }
+.gc-say::before { content: ""; position: absolute; top: -7px; left: 50%; width: 12px; height: 12px; transform: translateX(-50%) rotate(45deg);
+  background: inherit; border: inherit; border-right: 0; border-bottom: 0; }
+.gc-say.show { animation: gc-in .35s ease-out; }
+.gc-say.rage { color: var(--c-bright); font-style: normal; font-weight: 800; border-color: var(--c); }
+@keyframes gc-in { from { opacity: 0; transform: translateY(6px); } }
+
+/* the felt: deep crimson baize with a gold rail */
+.gc-felt { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 0; padding: 18px 22px;
+  border: 2px solid rgba(var(--gold-rgb), .6); border-radius: 120px / 60px; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, rgba(120, 10, 34, .9), rgba(40, 4, 12, .96) 75%);
+  box-shadow: 0 0 0 6px rgba(var(--d0-rgb), .8), 0 0 0 7px rgba(var(--gold-rgb), .35), inset 0 0 60px rgba(0, 0, 0, .6); }
+:root[data-theme="light"] .gc-felt { background: radial-gradient(ellipse at 50% 45%, rgb(150, 24, 50), rgb(84, 10, 28) 75%); }
+.gc-row { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.gc-label { font-family: var(--font-display); letter-spacing: 3px; font-size: 13px; color: rgb(232, 196, 124); }
+.gc-label b { display: inline-block; min-width: 2.4em; margin-left: 8px; padding: 1px 8px; border-radius: 10px; background: rgba(0, 0, 0, .45); color: #fff4e4; letter-spacing: 1px; }
+.gc-label b:empty { display: none; }
+.gc-hand { display: flex; justify-content: center; min-height: 160px; }
+.gc-mid { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.gc-rules { font-family: var(--font-display); font-size: 11px; letter-spacing: 3px; color: rgba(232, 196, 124, .55); }
+.gc-result { min-height: 1.4em; font-family: var(--font-display); font-weight: 700; letter-spacing: 3px; font-size: 28px; color: #fff4e4; opacity: 0; }
+.gc-result.show { opacity: 1; animation: gc-pop .45s cubic-bezier(.2, 1.6, .4, 1); }
+.gc-result.win { color: rgb(240, 210, 140); text-shadow: 0 0 14px rgba(232, 196, 124, .8); }
+.gc-result.lose { color: #ff9aa8; text-shadow: 0 0 14px rgba(222, 36, 70, .9); }
+@keyframes gc-pop { from { transform: scale(.6); opacity: 0; } }
+
+/* cards: ivory faces, crimson backs with a gold diamond lattice */
+.gc-card { position: relative; width: 108px; height: 156px; margin: 0 -16px; flex: none; border-radius: 7px; color: #161012;
+  background: linear-gradient(160deg, #fffaf0, #efe4d0); box-shadow: 0 4px 12px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(0, 0, 0, .25);
+  font-family: "Cinzel", serif; font-weight: 700; }
+.gc-card.red { color: #b0122e; }
+.gc-card .gc-r { position: absolute; top: 8px; left: 10px; font-size: 20px; line-height: 1; text-align: center; }
+.gc-card .gc-b { top: auto; left: auto; bottom: 8px; right: 10px; transform: rotate(180deg); }
+.gc-card .gc-s { position: absolute; inset: 0; display: grid; place-items: center; font-size: 58px; font-family: "DejaVu Sans", sans-serif; }
+.gc-card.back { background:
+    repeating-linear-gradient(45deg, transparent 0 7px, rgba(232, 196, 124, .35) 7px 8px),
+    repeating-linear-gradient(-45deg, transparent 0 7px, rgba(232, 196, 124, .35) 7px 8px),
+    linear-gradient(160deg, #8a0f26, #4a0614);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .55), inset 0 0 0 4px #2a030b, inset 0 0 0 5px rgba(232, 196, 124, .7); }
+.gc-card.new { animation: gc-deal .38s cubic-bezier(.2, .8, .3, 1) both; }
+.gc-card.flip { animation: gc-flip .4s ease-out both; }
+@keyframes gc-deal { from { opacity: 0; transform: translate(240px, -160px) rotate(25deg); } }
+@keyframes gc-flip { from { transform: rotateY(90deg); } }
+
+.gc-bar { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.gc-purse { display: flex; gap: 18px; font-family: var(--font-display); letter-spacing: 2px; font-size: 13px; color: var(--muted); }
+.gc-purse b { color: var(--hi); font-size: 18px; margin-left: 6px; }
+.gc-chips { display: flex; gap: 8px; margin-left: 10px; }
+.gc-chip { width: 46px; height: 46px; border-radius: 50%; cursor: pointer; font: 700 13px "Cinzel", serif; color: #fff;
+  border: 4px dashed rgba(255, 255, 255, .85); box-shadow: 0 0 0 2px rgba(0, 0, 0, .6), 0 3px 8px rgba(0, 0, 0, .5); transition: transform .12s; }
+.gc-chip:hover:not(:disabled) { transform: translateY(-3px); }
+.gc-chip:disabled { opacity: .3; cursor: default; }
+.gc-chip.c0 { background: #e9e2d4; color: #222; border-color: rgba(176, 18, 46, .8); }
+.gc-chip.c1 { background: #b0122e; }
+.gc-chip.c2 { background: #1b1416; }
+.gc-chip.c3 { background: linear-gradient(160deg, #e8c47c, #a87c2c); color: #2a1406; border-color: rgba(42, 20, 6, .7); }
+.gc-spacer { flex: 1; }
+.gc-keys { margin-top: 8px; color: var(--muted); font-size: 13px; font-style: italic; }
